@@ -2,38 +2,29 @@
 #include <string.h>
 int main()
 {
-    int k;
-    char strq[1000] = "hellowwwww";
-    int len = strlen(strq);
-    len = len - 1;
-    printf("%d", len);
-    printf("%d", k);
-    for(int i=0; len; ++i)
+    int k = 0;
+    char strq[] = "hellowwwww(())";
+    for(int i=0; i<strlen(strq); i++)
     {
-        
         if (strq[i] == ')')
         {
-            printf("%s", "баланс не соблюден!");
-            return 0;
+            k--;
         }
         else if (strq[i] == '(')
         {
-            for(int j=i; len; j++)
-            {
-                if (strq[j] == ')')
-                {
-                    strq[j] = 'e';
-                    break;
-                }
-                else if (j == len-1)
-                {
-                    printf("%s", "баланс не соблюден");
-                    return 0;
-                }
-            }
-            while ((getchar()) != '\n');
+            k++;
+        }
+        if (k < 0)
+        {
+            printf("%s", "баланс не соблюден");
+            return 0;
         }
     }
-    printf("%s", "баланс соблюден");
+    if (k == 0)
+    {
+        printf("%s", "баланс соблюден");
+        return 0;
+    }
+    printf("%s", "баланс не соблюден");
     return 0;
 }
