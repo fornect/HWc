@@ -12,8 +12,8 @@ int main(void)
         if (a % 2 == 0){
             sumfib = sumfib + a;
         }
-        if (i == 999999){
-            printf("%d", a);
+        if (a>1000000){
+            break
         }
         a = b;
         b = c;
