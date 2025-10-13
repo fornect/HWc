@@ -18,6 +18,6 @@ int main(void)
         a = b;
         b = c;
     }
-    //printf("%d", sumfib);
+    printf("%d", sumfib);
     return 0;
 }
