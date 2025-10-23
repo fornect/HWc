@@ -14,13 +14,26 @@ int main()
     for (int i = 0; i < lena; i++){
         e = peek(head);
         
-        if ((a[i] == '-' || a[i] == '+' || a[i] == '*' || a[i] == '/') && e == 'N'){
+        if ((a[i] == '-' || a[i] == '+' || a[i] == '*' || a[i] == '/' || a[i] == '(' || a[i] == ')') && e == 'N'){
+            push(&head, a[i]);
+        }
+        else if (a[i] == '('){
+            push(&head, a[i]);
+        }
+        else if (a[i] == ')'){
+            while (peek(head) != '('){
+                e = pop(&head);
+                queue[n] = e;
+                n++;
+            }
             push(&head, a[i]);
         }
         else if ((a[i] == '-' || a[i] == '+')){
-            e = pop(&head);
-            queue[n] = e;
-            n++;
+            if (e != ')' && e != '('){
+                e = pop(&head);
+                queue[n] = e;
+                n++;
+            }
             push(&head, a[i]);
             
         }
@@ -37,7 +50,7 @@ int main()
             n++;
         }
     }
-    while (peek(head) != 'N'){
+    while (peek(head) != 'N' && peek(head) != '(' && peek(head) != ')'){
         e = pop(&head);
         queue[n] = e;
         n++;
