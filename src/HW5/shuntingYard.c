@@ -26,6 +26,7 @@ int main()
                 queue[n] = e;
                 n++;
             }
+            e = pop(&head);
             push(&head, a[i]);
         }
         else if ((a[i] == '-' || a[i] == '+')){
