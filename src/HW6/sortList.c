@@ -28,7 +28,7 @@ int push(List* list, int value)
 
   new->prev = new->next = NULL;
   new->value = value;
-
+  
   if (list->head)
   {
     list->head->prev = new;
@@ -105,7 +105,7 @@ int main()
         }
         else if(a == 3){
             printList(&list);
-            printf("\n")
+            printf("\n");
         }
         else if(a == 0){
             return 0;
