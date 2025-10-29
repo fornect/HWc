@@ -78,14 +78,21 @@ int main()
 {
   int countKnight;
   int kill;
+  
   List list = new();
   printf("%s", "Введите количество воинов:");
   scanf("%d", &countKnight);
   printf("%s", "Введите какого по счету воина будут убивать:");
   scanf("%d", &kill);
+  if (countKnight < 1){
+    printf("%s", "воинов недостаточно для убийства");
+    printf("\n");
+    return 0;
+  }
   for (int i = countKnight; 0 < i; i--){
     push(&list, i);
   }
   delElement(&list, kill);
   printf("\n");
+  return 0;
 }
