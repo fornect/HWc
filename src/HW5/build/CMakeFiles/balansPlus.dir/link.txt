@@ -1,0 +1,1 @@
+/usr/bin/cc -Wl,--dependency-file=CMakeFiles/balansPlus.dir/link.d CMakeFiles/balansPlus.dir/balansPlus.c.o -o balansPlus  libstack.a
