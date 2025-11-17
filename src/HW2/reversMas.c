@@ -1,25 +1,31 @@
 #include <stdio.h>
-void reversMas(int mas[], int i, int j)
+void reversEll(int arr[], int i, int j)
 {
-    int c;
+    int c = 0;
     j--;
-    for (i, j; i < j; i++, j--){
-        c = mas[i];
-        mas[i] = mas[j];
-        mas[j] = c;
+    while (i < j) {
+        c = arr[i];
+        arr[i] = arr[j];
+        arr[j] = c;
+        i++;
+        j--;
     }
+}
+void reversMas(int arr[], int m, int n)
+{
+    reversEll(arr, 0, m);
+    reversEll(arr, m, n);
+    reversEll(arr, 0, n);
 }
 int main()
 {
-    int mas[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    int m;
+    int arr[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+    int m = 0;
     scanf("%d", &m);
-    int n = sizeof(mas) / sizeof(mas[0]);
-    reversMas(mas, 0, m);
-    reversMas(mas, m, n);
-    reversMas(mas, 0, n);
-    for (int i = 0; i < n; i++){
-        printf("%d ", mas[i]);
+    int n = sizeof(arr) / sizeof(arr[0]);
+    reversMas(arr, m, n);
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
     }
     printf("\n");
 }

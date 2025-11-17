@@ -2,7 +2,7 @@
 
 int main()
 {
-    int x;
+    int x = 0;
     scanf("%d", &x);
     int t = x * x;
     int polynomial = (t + 1) * (t + x) + 1;
