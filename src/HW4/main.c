@@ -1,25 +1,33 @@
+#include "bubbleSort.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "sort_q.h"
 
 int main()
 {
-    int lenmas;
-    int sortmas[101];
-    int notsortmas[101];
-    int i;
-    int n;
-    int j;
+    int lenArr = 2;
+
+    int* notSortArr = (int*)malloc(lenArr * sizeof(int));
     printf("Введите числа через пробел, нажмите ENTER чтобы прекратить ввод:");
-    for (i = 0; i < 101; i++) {
-        scanf("%d", &notsortmas[i]);
-        if (getchar() == '\n'){
-            break;
+    int i = 1;
+    scanf("%d", &notSortArr[0]);
+    while (getchar() != '\n') {
+        if (i == lenArr - 1) {
+            int* notSortArrNew = (int*)malloc(2 * lenArr * sizeof(int));
+            memcpy(notSortArrNew, notSortArr, lenArr * sizeof(int));
+            lenArr = lenArr * 2;
+            free(notSortArr);
+            notSortArr = notSortArrNew;
         }
+        scanf("%d", &notSortArr[i]);
+        i++;
     }
-    memcpy(sortmas, notsortmas, sizeof(notsortmas));
-    i++;
-    sort_q(sortmas, i);
-    printf("%d\n", matching(notsortmas, sortmas, i));
+    for (int j = 0; j < i; j++) {
+    }
+    int* sortArr = (int*)malloc(i * sizeof(int));
+    memcpy(sortArr, notSortArr, i * sizeof(int));
+    bubbleSort(sortArr, i);
+    for (int j = 0; j < i; j++) {
+    }
+    printf("%d\n", matching(notSortArr, sortArr, i));
 }
