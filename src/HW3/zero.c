@@ -1,22 +1,26 @@
 #include <stdio.h>
 
-int main()
+int countZero(int n, int* arr)
 {
-    int i;
-    int n;
-    int k;
-    printf("введите количество элементов массива:");
-    scanf("%d", &n);
-    int a[n];
-    for (i = 0; i < n; i++){
-        printf("a[%d]=", i);
-        scanf("%d", &a[i]);
-    }
-    for (i = 0; i < n; i++){
-        if (a[i] == 0){
+    int k = 0;
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == 0) {
             k++;
         }
     }
-    printf("%d\n", k);
+    return k;
+}
+
+int main()
+{
+    int n = 0;
+    printf("введите количество элементов массива:");
+    scanf("%d", &n);
+    int arr[n] = {};
+    for (int i = 0; i < n; i++) {
+        printf("arr[%d]=", i);
+        scanf("%d", &arr[i]);
+    }
+    printf("%d\n", countZero(n, arr));
     return 0;
 }

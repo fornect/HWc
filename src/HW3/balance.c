@@ -1,27 +1,35 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 
-int main()
+bool balancec(char* s)
 {
+    int lens = strlen(s);
     int k = 0;
-    char strq[1000];
-    scanf("%s", &strq);
-    for(int i = 0; i < strlen(strq); i++){
-        if (strq[i] == ')'){
+    for (int i = 0; i < lens; i++) {
+        if (s[i] == ')') {
             k--;
-        }
-        else if (strq[i] == '('){
+        } else if (s[i] == '(') {
             k++;
         }
-        if (k < 0){
-            printf("%s\n", "баланс не соблюден");
-            return 0;
+        if (k < 0) {
+            return false;
         }
     }
-    if (k == 0){
-        printf("%s\n", "баланс соблюден");
+    if (k == 0) {
+        return true;
+    }
+    return false;
+}
+
+int main()
+{
+    char strq[1000] = "";
+    scanf("%s", &strq);
+    if (balancec(strq)) {
+        printf("%s", "баланс соблюден");
         return 0;
     }
-    printf("%s\n", "баланс не соблюден");
+    printf("%s", "баланс не соблюден");
     return 0;
 }
