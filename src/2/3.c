@@ -3,7 +3,7 @@
 int main()
 {
     int a = 0;
-    int mas[] = {0, 1, 2, 3, 4, 5, 6, 7}; 
+    int mas[] = { 0, 1, 2, 3, 4, 5, 6, 7 };
     a = mas[0];
     mas[0] = mas[7];
     mas[7] = a;
