@@ -1,7 +1,7 @@
 #pragma once
 
 // сортитровка
-void bubbleSort(int* mas, int lenm);
+void bubbleSort(int* arr, int lenArr);
 
 // сравнение
-int matching(int* mas1, int* mas2, int lenmas);
+int matching(int* arr1, int* arr2, int lenArr);
