@@ -4,7 +4,7 @@
 
 void bubbleSort(int arr[], int n)
 {
-    bool swapped;
+    bool swapped = false;
     for (int i = 0; i < n - 1; i++) {
         swapped = false;
         for (int j = 0; j < n - i - 1; j++) {
@@ -21,13 +21,13 @@ void bubbleSort(int arr[], int n)
     }
 }
 
-int matching(int* mas1, int* mas2, int lenmas)
+int matching(int* arr1, int* arr2, int lenArr)
 {
     int k = 0;
-    for (int i = 0; i < lenmas; i++) {
-        if (mas1[i] == mas2[i]) {
+    for (int i = 0; i < lenArr; i++) {
+        if (arr1[i] == arr2[i]) {
             k++;
         }
     }
-    return lenmas - k;
+    return lenArr - k;
 }

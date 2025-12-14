@@ -22,12 +22,8 @@ int main()
         scanf("%d", &notSortArr[i]);
         i++;
     }
-    for (int j = 0; j < i; j++) {
-    }
     int* sortArr = (int*)malloc(i * sizeof(int));
     memcpy(sortArr, notSortArr, i * sizeof(int));
     bubbleSort(sortArr, i);
-    for (int j = 0; j < i; j++) {
-    }
-    printf("%d\n", matching(notSortArr, sortArr, i));
+    return matching(notSortArr, sortArr, i);
 }

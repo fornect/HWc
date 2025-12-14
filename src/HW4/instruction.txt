@@ -1,7 +1,7 @@
 #в асемблере также находиться функция сравнения масивов в одном файле с сортировкой
 
 
-bubbleSort.s создано c помошью gcc -O2 -S hello.c -o hello.s
+bubbleSort.s создано c помошью gcc -O2 -S bubbleSort.c -o bubbleSort.s
 
 
 используйте gcc -Wall -Wextra -pedantic main.c bubbleSort.s -o sort чтобы собрать
