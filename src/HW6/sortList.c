@@ -8,22 +8,20 @@
 
 typedef struct ListNode {
     int value;
-    struct ListNode* prev;
     struct ListNode* next;
 } ListNode;
 
-typedef struct List {
+typedef struct SortedList {
     ListNode* head;
-    ListNode* tail;
-} List;
+} SortedList;
 
-List new()
+SortedList new()
 {
-    List list = { .head = NULL, .tail = NULL };
+    SortedList list = { NULL };
     return list;
 }
 
-int push(List* list, int value)
+int push(SortedList* list, int value)
 {
     if (list == NULL)
         return -1;
@@ -31,19 +29,11 @@ int push(List* list, int value)
     ListNode* new = malloc(sizeof(ListNode));
     if (new == NULL)
         return -2;
-
-    new->prev = new->next = NULL;
     new->value = value;
-
-    if (list->head) {
-        list->head->prev = new;
-        new->next = list->head;
-        list->head = new;
-    } else {
-        list->head = list->tail = new;
-    }
+    new->next = list->head;
+    list->head = new;
     ListNode* current = list->head;
-    while (current && current->next) {
+    while (current != NULL && current->next != NULL) {
         if (current->value < current->next->value) {
             int val = current->value;
             current->value = current->next->value;
@@ -54,111 +44,134 @@ int push(List* list, int value)
     return 0;
 }
 
-void printList(List* list)
+void printSortedList(SortedList* list)
 {
     ListNode* current = list->head;
 
-    while (current) {
+    while (current != NULL) {
         printf("%d ", current->value);
         current = current->next;
     }
 }
 
-int delElement(List* list, int value)
+void deleteElement(SortedList* list, int value)
 {
     ListNode* current = list->head;
+    ListNode* currentPrev = list->head;
     while (current != NULL) {
         if (current->value == value) {
-            if (current->prev == NULL && current->next == NULL) {
+            if (current->next == NULL && current == list->head) {
                 list->head = NULL;
-                list->tail = NULL;
-            } else if (current->prev == NULL) {
-                current->next->prev = NULL;
-                list->head = current->next;
+                free(current);
+                break;
             } else if (current->next == NULL) {
-                current->prev->next = NULL;
-                list->tail = current->prev;
+                currentPrev->next = NULL;
+                free(current);
+                break;
+            } else if (current == list->head) {
+                list->head = list->head->next;
+                free(current);
+                current = list->head;
+                currentPrev = current;
             } else {
-                current->prev->next = current->next;
-                current->next->prev = current->prev;
+                currentPrev->next = current->next;
+                free(current);
+                current = currentPrev;
+                current = current->next;
             }
+        } else {
+            currentPrev = current;
+            current = current->next;
         }
-        current = current->next;
+    }
+}
+void deleteSortedList(SortedList* list)
+{
+    ListNode* current = list->head;
+    if (list->head != NULL) {
+        while (current->next != NULL) {
+            list->head = current->next;
+            free(current);
+            current = list->head;
+        }
+        list->head = NULL;
+        free(current);
     }
 }
 
-bool isEmpty(List* list)
+bool isEmpty(SortedList* list)
 {
     return list->head == NULL;
 }
 
 bool testIsEmpty()
 {
-    List list = new();
+    SortedList list = new();
     return isEmpty(&list);
 }
 
 bool testOneElement()
 {
-    List list = new();
+    SortedList list = new();
     push(&list, 1);
-    return !isEmpty(&list);
+    bool result = (list.head->value == 1);
+    deleteSortedList(&list);
+    return result;
 }
 
-bool testDeletion()
+bool testDeletionOneElement()
 {
-    List list = new();
+    SortedList list = new();
     push(&list, 1);
-    delElement(&list, 1);
+    deleteElement(&list, 1);
     return isEmpty(&list);
 }
 
-int main(int argc, char** argv)
+bool testDeletionManyStartElements()
 {
-    bool testMode = false;
-    for (int i = 0; i < argc; ++i) {
-        if (strcmp(argv[i], "--test") == 0) {
-            testMode = true;
-            break;
-        }
+    SortedList list = new();
+    for (int i = 0; i < 10; i++) {
+        push(&list, 2);
     }
-
-    if (testMode) {
-        bool (*tests[3])() = { &testIsEmpty, &testOneElement, &testDeletion };
-        for (int testNum = 0; testNum < 3; ++testNum) {
-            if (tests[testNum]()) {
-                printf(GREEN("Test %d passed!\n"), testNum + 1);
-            } else {
-                printf(RED("Test %d failed!\n"), testNum + 1);
-                return 1;
-            }
-        }
-        return 0;
+    push(&list, 1);
+    deleteElement(&list, 2);
+    bool result = (list.head->value == 1);
+    deleteSortedList(&list);
+    return result;
+}
+bool testDeletionManyEndElements()
+{
+    SortedList list = new();
+    for (int i = 0; i < 10; i++) {
+        push(&list, 2);
     }
-    int a = 10;
-    List list = new();
-    printf("%s\n", "Имееться 4 команды: 0 - выйти, 1 – добавить значение в сортированный список, 2 – удалить значение из списка, 3 – распечатать список");
-    while (a != 0) {
-        printf("%s", "Введите команду:");
-        scanf("%d", &a);
-        if (a == 1) {
-            int b;
-            printf("%s", "Введите значение:");
-            scanf("%d", &b);
-            push(&list, b);
-        } else if (a == 2) {
-            int b;
-            printf("%s", "Введите значение:");
-            scanf("%d", &b);
-            delElement(&list, b);
-        } else if (a == 3) {
-            printList(&list);
-            printf("\n");
-        } else if (a == 0) {
-            return 0;
-        } else {
-            printf("%s", "нет такой команды");
-        }
+    push(&list, 3);
+    deleteElement(&list, 2);
+    bool result = (list.head->next == NULL);
+    deleteSortedList(&list);
+    return result;
+}
+bool testDeletionManyMidleElements()
+{
+    SortedList list = new();
+    for (int i = 0; i < 10; i++) {
+        push(&list, 2);
     }
-    return 0;
+    push(&list, 3);
+    push(&list, 1);
+    deleteElement(&list, 2);
+    bool result = (list.head->next->value == 1);
+    deleteSortedList(&list);
+    return result;
+}
+bool testDeletionAllElements()
+{
+    SortedList list = new();
+    for (int i = 0; i < 10; i++) {
+        push(&list, 2);
+    }
+    push(&list, 3);
+    push(&list, 1);
+    deleteSortedList(&list);
+    return isEmpty(&list);
 }
