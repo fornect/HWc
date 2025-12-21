@@ -6,7 +6,7 @@
 int main()
 {
     int lenArr = 2;
-
+    int result = 0;
     int* notSortArr = (int*)malloc(lenArr * sizeof(int));
     printf("Введите числа через пробел, нажмите ENTER чтобы прекратить ввод:");
     int i = 1;
@@ -25,5 +25,8 @@ int main()
     int* sortArr = (int*)malloc(i * sizeof(int));
     memcpy(sortArr, notSortArr, i * sizeof(int));
     bubbleSort(sortArr, i);
-    return matching(notSortArr, sortArr, i);
+    result = matching(notSortArr, sortArr, i);
+    free(notSortArr);
+    free(sortArr);
+    return result;
 }
