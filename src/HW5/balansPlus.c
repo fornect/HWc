@@ -6,39 +6,39 @@ int main()
 {
     char bracket;
     char strq[1000];
-    charStack *head = NULL;
+    charStack* list = newSortedList();
     scanf("%s", &strq);
     for(int i = 0; i < strlen(strq); i++){
 
         if (strq[i] == ')'){
-            if (pop(&head)!='('){
+            if (pop(list)!='('){
                     printf("%s\n", "баланс не соблюден");
                     return 0;
             }
         }
         else if (strq[i] == '}'){
-            if (pop(&head)!='{'){
+            if (pop(list)!='{'){
                     printf("%s\n", "баланс не соблюден");
                     return 0;
             }
         }
         else if (strq[i] == ']'){
-            if (pop(&head)!='['){
+            if (pop(list)!='['){
                     printf("%s\n", "баланс не соблюден");
                     return 0;
             }
         }
         else if (strq[i] == '('){
-            push(&head, '(');
+            push(list, '(');
         }
         else if (strq[i] == '{'){
-            push(&head, '{');
+            push(list, '{');
         }
         else if (strq[i] == '['){
-            push(&head, '[');
+            push(list, '[');
         }
     }
-    if (pop(&head) == 'N'){
+    if (pop(list) == 'N'){
         printf("%s\n", "баланс соблюден");
         return 0;
     }
