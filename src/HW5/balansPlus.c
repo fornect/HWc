@@ -6,7 +6,7 @@ int main()
 {
     char bracket;
     char strq[1000];
-    charStack* list = newSortedList();
+    CharStack* stack = newStack();
     scanf("%s", &strq);
     for(int i = 0; i < strlen(strq); i++){
 
