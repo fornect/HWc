@@ -1,33 +1,54 @@
+#include "stack.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "stack.h"
 
-void push(charStack **head, char value)
+typedef struct ListNode {
+    int value;
+    struct ListNode* next;
+} ListNode;
+
+typedef struct CharStack {
+    ListNode* head;
+} CharStack;
+
+CharStack* newStack()
 {
-    charStack *tmp = malloc(sizeof(charStack));
-    tmp->next = *head;
-    tmp->value = value;
-    *head = tmp;
+    CharStack* list = malloc(sizeof(*list));
+    list->head = NULL;
+    return list;
 }
 
-char pop(charStack **head)
+int push(CharStack* list, char value)
 {
-        charStack *out;
-        char value;
-        if (*head == NULL) {
-                return 'N';
-        }
-        out = *head;
-        *head = (*head)->next;
-        value = out->value;
-        free(out);
-        return value;
+    if (list == NULL)
+        return -1;
+
+    ListNode* newElement = malloc(sizeof(ListNode));
+    if (newElement == NULL)
+        return -2;
+    newElement->value = value;
+    newElement->next = list->head;
+    list->head = newElement;
+    return 0;
 }
 
-char peek(const charStack* head)
+char pop(CharStack* list)
 {
-        if (head == NULL) {
-                return 'N';
-        }
-        return head->value;
+    if (list->head == NULL) {
+        return 'N';
+    }
+    char result = list->head->value;
+    ListNode* popElement = list->head;
+    list->head = list->head->next;
+    free(popElement);
+    return result;
+}
+
+char peek(CharStack* list)
+{
+    if (list->head == NULL)
+    {
+        return 'N';
+    }
+    return list->head->value;
 }
