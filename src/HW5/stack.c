@@ -35,9 +35,6 @@ int push(CharStack* stack, char value)
 
 char pop(CharStack* stack)
 {
-    if (isEmpty(stack)) {
-        return 'N';
-    }
     char result = stack->head->value;
     ListNode* popElement = stack->head;
     stack->head = stack->head->next;
@@ -47,10 +44,6 @@ char pop(CharStack* stack)
 
 char peek(CharStack* stack)
 {
-    if (isEmpty(stack))
-    {
-        return 'N';
-    }
     return stack->head->value;
 }
 
