@@ -1,98 +1,136 @@
-#include <stdlib.h>
+#include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
+#define GREEN(string) "\x1b[32m" string "\x1b[0m"
+#define RED(string) "\x1b[31m" string "\x1b[0m"
 
-typedef struct ListNode{
-  int value;
-  struct ListNode* prev;
-  struct ListNode* next;
-}ListNode;
+typedef struct ListNode {
+    int value;
+    struct ListNode* next;
+} ListNode;
 
-typedef struct List{
+typedef struct KnightList {
     ListNode* head;
-    ListNode* tail;
-}List;
+} KnightList;
 
-List new()
+KnightList new()
 {
-    List list = { .head = NULL , .tail = NULL};
+    KnightList list = { NULL };
     return list;
 }
 
-int push(List* list, int value)
+int push(KnightList* list, int value)
 {
-  if (list == NULL) return -1;
+    if (list == NULL)
+        return -1;
 
-  ListNode* new = malloc(sizeof(ListNode));
-  if (new == NULL) return -2;
-
-  new->prev = new->next = NULL;
-  new->value = value;
-  
-  if (list->head)
-  {
-    list->head->prev = new;
+    ListNode* new = malloc(sizeof(ListNode));
+    if (new == NULL)
+        return -2;
+    new->value = value;
     new->next = list->head;
     list->head = new;
-    list->head->prev = list->tail;
-    list->tail->next = list->head;
-  }
-  else 
-  {
-    list->head = list->tail = new;
-    list->head->next = list->tail;
-    list->tail->prev = list->head;
-  }
+    return 0;
 }
-int delElement(List* list, int co)
+void cyclingList(KnightList* list)
 {
-  ListNode* current = list->head;
-  int k = 1;
-  while (current->next != current)
-  {
-    if (k % co == 0)
-    {
-      current->prev->next = current->next;
-      current->next->prev = current->prev;
-      //printf("%d", current->value);
+    ListNode* current = list->head;
+    if (current != NULL) {
+        while (current->next != NULL) {
+            if (current->next == list->head) {
+                break;
+            }
+            current = current->next;
+        }
+        current->next = list->head;
     }
-    k++;
-    current = current->next;
-    
-  }
-  printf("%d", current->value);
 }
 
-void printList(List* list, int n)
+void deleteElement(KnightList* list, int value)
 {
-  ListNode* current = list->head;
+    ListNode* current = list->head;
+    ListNode* currentForDelete = NULL;
+    while (current->next->value != value) {
+        current = current->next;
+        if (current->next == list->head) {
+            break;
+        }
+    }
+    if (current->next == list->head) {
+        currentForDelete = list->head;
+        list->head = current;
+        current->next = current->next->next;
+    } else if (current == current->next) {
+        list->head = NULL;
+    } else {
+        currentForDelete = current->next;
+        current->next = current->next->next;
+    }
 
-  for (int i = 0; i < n; i++)
-  {
-    printf("%d ", current->value);
-    current = current->next;
-  }
+    free(currentForDelete);
 }
 
+bool isEmpty(KnightList* list)
+{
+    return list->head == NULL;
+}
+
+void knight(KnightList* list, int countKnight)
+{
+    for (int i = countKnight; 0 < i; i--) {
+        push(list, i);
+    }
+    cyclingList(list);
+}
+
+int killKnight(KnightList* list, int knight)
+{
+    ListNode* current = list->head;
+    while (current != current->next) {
+        for (int i = 1; i < knight; i++) {
+            current = current->next;
+        }
+        int numKnight = current->value;
+        current = current->next;
+        deleteElement(list, numKnight);
+    }
+    int numKnight = current->value;
+    deleteElement(list, numKnight);
+    return numKnight;
+}
+
+int megaKill(int countKnight, int kill)
+{
+    KnightList list = new();
+    knight(&list, countKnight);
+    int result = killKnight(&list, kill);
+    return result;
+}
 int main()
 {
-  int countKnight;
-  int kill;
-  
-  List list = new();
-  printf("%s", "Введите количество воинов:");
-  scanf("%d", &countKnight);
-  printf("%s", "Введите какого по счету воина будут убивать:");
-  scanf("%d", &kill);
-  if (countKnight < 1){
-    printf("%s", "воинов недостаточно для убийства");
-    printf("\n");
+    int countKnight = 0;
+    int kill = 0;
+    printf("%s", "Введите количество воинов:");
+    scanf("%d", &countKnight);
+    printf("%s", "Введите какого по счету воина будут убивать:");
+    scanf("%d", &kill);
+    if (countKnight < 1) {
+        printf("%s", "воинов недостаточно для убийства");
+        printf("\n");
+        return 0;
+    }
+    if (kill == 0) {
+        printf("%s", "ни кого не убивать не выйдет");
+        printf("\n");
+        return 0;
+    }
+    if (kill < 0) {
+        printf("%s", "воскрешение запрешенно!!!");
+        printf("\n");
+        return 0;
+    }
+    printf("%d\n", megaKill(countKnight, kill));
     return 0;
-  }
-  for (int i = countKnight; 0 < i; i--){
-    push(&list, i);
-  }
-  delElement(&list, kill);
-  printf("\n");
-  return 0;
 }
