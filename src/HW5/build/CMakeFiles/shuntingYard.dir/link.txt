@@ -1,1 +1,0 @@
-/usr/bin/cc -Wl,--dependency-file=CMakeFiles/shuntingYard.dir/link.d CMakeFiles/shuntingYard.dir/shuntingYard.c.o -o shuntingYard  libstack.a

@@ -1,4 +1,0 @@
-/home/fornect/HWc/src/HW5/build/CMakeFiles/stack.dir
-/home/fornect/HWc/src/HW5/build/CMakeFiles/shuntingYard.dir
-/home/fornect/HWc/src/HW5/build/CMakeFiles/edit_cache.dir
-/home/fornect/HWc/src/HW5/build/CMakeFiles/rebuild_cache.dir

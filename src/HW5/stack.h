@@ -6,7 +6,11 @@ typedef struct CharStack CharStack;
 // coздание стека
 CharStack* newStack();
 
+<<<<<<< HEAD
 // добавить на верх
+=======
+//добавить на верх
+>>>>>>> 0ee0d90 (mini fix)
 int push(CharStack* stack, char value);
 
 // взять значение верхнего и удалить его
@@ -18,4 +22,8 @@ char pop(CharStack* stack);
 char peek(CharStack* stack);
 
 //
+<<<<<<< HEAD
 bool isEmpty(CharStack* stack);
+=======
+bool isEmpty(CharStack *stack);
+>>>>>>> 0ee0d90 (mini fix)
