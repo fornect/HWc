@@ -1,13 +1,16 @@
 #pragma once
-
+#include <stdbool.h>
 // stack
 typedef struct CharStack CharStack;
 
 //добавить на верх
-int push(CharStack* list, char value);
+int push(CharStack* stack, char value);
 
 //взять значение верхнего и удалить его
-char pop(CharStack *list);
+char pop(CharStack *stack);
 
 //взять значение верхнего
-char peek(CharStack *list);
+char peek(CharStack *stack);
+
+//
+bool isEmpty(CharStack *stack);

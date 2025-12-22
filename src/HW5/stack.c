@@ -1,6 +1,7 @@
 #include "stack.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct ListNode {
     int value;
@@ -13,42 +14,47 @@ typedef struct CharStack {
 
 CharStack* newStack()
 {
-    CharStack* list = malloc(sizeof(*list));
-    list->head = NULL;
-    return list;
+    CharStack* stack = malloc(sizeof(*stack));
+    stack->head = NULL;
+    return stack;
 }
 
-int push(CharStack* list, char value)
+int push(CharStack* stack, char value)
 {
-    if (list == NULL)
+    if (stack == NULL)
         return -1;
 
     ListNode* newElement = malloc(sizeof(ListNode));
     if (newElement == NULL)
         return -2;
     newElement->value = value;
-    newElement->next = list->head;
-    list->head = newElement;
+    newElement->next = stack->head;
+    stack->head = newElement;
     return 0;
 }
 
-char pop(CharStack* list)
+char pop(CharStack* stack)
 {
-    if (list->head == NULL) {
+    if (isEmpty(stack)) {
         return 'N';
     }
-    char result = list->head->value;
-    ListNode* popElement = list->head;
-    list->head = list->head->next;
+    char result = stack->head->value;
+    ListNode* popElement = stack->head;
+    stack->head = stack->head->next;
     free(popElement);
     return result;
 }
 
-char peek(CharStack* list)
+char peek(CharStack* stack)
 {
-    if (list->head == NULL)
+    if (isEmpty(stack))
     {
         return 'N';
     }
-    return list->head->value;
+    return stack->head->value;
+}
+
+bool isEmpty(CharStack* stack)
+{
+    return (stack->head == NULL);
 }
