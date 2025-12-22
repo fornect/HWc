@@ -1,19 +1,11 @@
 #pragma once
 #include <stdbool.h>
 
-// sorted list's element
-typedef struct ListNode {
-    int value;
-    struct ListNode* next;
-} ListNode;
-
 // sorted list
-typedef struct SortedList {
-    ListNode* head;
-} SortedList;
+typedef struct SortedList SortedList;
 
 // return empty list
-SortedList new ();
+SortedList* newSortedList();
 
 // push element to list and sort list
 // if return 0 all good; if return -1 or -2 not good

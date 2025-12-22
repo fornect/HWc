@@ -28,26 +28,25 @@ int main(int argc, char** argv)
         return 0;
     }
     int a = 10;
-    SortedList list = new();
+    SortedList* list = newSortedList();
     printf("%s\n", "Имееться 4 команды: 0 - выйти, 1 – добавить значение в сортированный список, 2 – удалить значение из списка, 3 – распечатать список");
     while (a != 0) {
         printf("%s", "Введите команду:");
         scanf("%d", &a);
+        int b = 0;
         if (a == 1) {
-            int b;
             printf("%s", "Введите значение:");
             scanf("%d", &b);
-            push(&list, b);
+            push(list, b);
         } else if (a == 2) {
-            int b;
             printf("%s", "Введите значение:");
             scanf("%d", &b);
-            deleteElement(&list, b);
+            deleteElement(list, b);
         } else if (a == 3) {
-            printSortedList(&list);
+            printSortedList(list);
             printf("\n");
         } else if (a == 0) {
-            deleteSortedList(&list);
+            deleteSortedList(list);
             return 0;
         } else {
             printf("%s", "нет такой команды");

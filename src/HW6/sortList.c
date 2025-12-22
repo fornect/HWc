@@ -15,9 +15,10 @@ typedef struct SortedList {
     ListNode* head;
 } SortedList;
 
-SortedList new()
+SortedList* newSortedList()
 {
-    SortedList list = { NULL };
+    SortedList* list = malloc(sizeof(*list));
+    list->head = NULL;
     return list;
 }
 
@@ -26,12 +27,12 @@ int push(SortedList* list, int value)
     if (list == NULL)
         return -1;
 
-    ListNode* new = malloc(sizeof(ListNode));
-    if (new == NULL)
+    ListNode* newElement = malloc(sizeof(ListNode));
+    if (newElement == NULL)
         return -2;
-    new->value = value;
-    new->next = list->head;
-    list->head = new;
+    newElement->value = value;
+    newElement->next = list->head;
+    list->head = newElement;
     ListNode* current = list->head;
     while (current != NULL && current->next != NULL) {
         if (current->value < current->next->value) {
@@ -97,6 +98,7 @@ void deleteSortedList(SortedList* list)
         list->head = NULL;
         free(current);
     }
+    free(list);
 }
 
 bool isEmpty(SortedList* list)
@@ -106,72 +108,74 @@ bool isEmpty(SortedList* list)
 
 bool testIsEmpty()
 {
-    SortedList list = new();
-    return isEmpty(&list);
+    SortedList* list = newSortedList();
+    bool result = isEmpty(list);
+    free(list);
+    return result;
 }
 
 bool testOneElement()
 {
-    SortedList list = new();
-    push(&list, 1);
-    bool result = (list.head->value == 1);
-    deleteSortedList(&list);
+    SortedList* list = newSortedList();
+    push(list, 1);
+    bool result = (list->head->value == 1);
+    deleteSortedList(list);
     return result;
 }
 
 bool testDeletionOneElement()
 {
-    SortedList list = new();
-    push(&list, 1);
-    deleteElement(&list, 1);
-    return isEmpty(&list);
+    SortedList* list = newSortedList();
+    push(list, 1);
+    deleteElement(list, 1);
+    return isEmpty(list);
 }
 
 bool testDeletionManyStartElements()
 {
-    SortedList list = new();
+    SortedList* list = newSortedList();
     for (int i = 0; i < 10; i++) {
-        push(&list, 2);
+        push(list, 2);
     }
-    push(&list, 1);
-    deleteElement(&list, 2);
-    bool result = (list.head->value == 1);
-    deleteSortedList(&list);
+    push(list, 1);
+    deleteElement(list, 2);
+    bool result = (list->head->value == 1);
+    deleteSortedList(list);
     return result;
 }
 bool testDeletionManyEndElements()
 {
-    SortedList list = new();
+    SortedList* list = newSortedList();
     for (int i = 0; i < 10; i++) {
-        push(&list, 2);
+        push(list, 2);
     }
-    push(&list, 3);
-    deleteElement(&list, 2);
-    bool result = (list.head->next == NULL);
-    deleteSortedList(&list);
+    push(list, 3);
+    deleteElement(list, 2);
+    bool result = (list->head->next == NULL);
+    deleteSortedList(list);
     return result;
 }
 bool testDeletionManyMidleElements()
 {
-    SortedList list = new();
+    SortedList* list = newSortedList();
     for (int i = 0; i < 10; i++) {
-        push(&list, 2);
+        push(list, 2);
     }
-    push(&list, 3);
-    push(&list, 1);
-    deleteElement(&list, 2);
-    bool result = (list.head->next->value == 1);
-    deleteSortedList(&list);
+    push(list, 3);
+    push(list, 1);
+    deleteElement(list, 2);
+    bool result = (list->head->next->value == 1);
+    deleteSortedList(list);
     return result;
 }
 bool testDeletionAllElements()
 {
-    SortedList list = new();
+    SortedList* list = newSortedList();
     for (int i = 0; i < 10; i++) {
-        push(&list, 2);
+        push(list, 2);
     }
-    push(&list, 3);
-    push(&list, 1);
-    deleteSortedList(&list);
-    return isEmpty(&list);
+    push(list, 3);
+    push(list, 1);
+    deleteSortedList(list);
+    return isEmpty(list);
 }
